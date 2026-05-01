@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Find your perfect match ❤️</title>
+    <style>
+        body {
+            font-family: "Ubuntu", sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: rgb(56, 35, 245);
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .radio-group {
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 8px;
+            background-color: rgb(56, 35, 245);
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+
+    <script>
+        function validateForm() {
+            let interest1 = document.getElementsByName("interest1")[0].value;
+            let interest2 = document.getElementsByName("interest2")[0].value;
+
+            if (interest1 === interest2) {
+                alert("Please choose two different interests!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Find your perfect match ❤️</h1>
+
+        <form action="/submit" method="POST" onsubmit="return validateForm()">
+
+            <label>First Name:</label>
+            <input type="text" name="first_name" required>
+
+            <label>Last Name:</label>
+            <input type="text" name="last_name" required>
+            
+            <label>Age:</label>
+            <input type="number" name="age" min="13" max="120" required>
+
+            <label>Top Interest:</label>
+            <select name="interest1" required>
+                <option value="">--Select--</option>
+                <option>Sports</option>
+                <option>Music</option>
+                <option>Theater</option>
+                <option>Exercise</option>
+                <option>Movie/TV</option>
+                <option>Art</option>
+                <option>Science</option>
+                <option>Math</option>
+                <option>Politics</option>
+                <option>Cooking/Baking</option>
+                <option>Writing</option>
+                <option>Finance/Business</option>
+                <option>Traveling</option>
+                <option>Fashion</option>
+            </select>
+
+            <label>Second Interest:</label>
+            <select name="interest2" required>
+                <option value="">--Select--</option>
+                <option>Sports</option>
+                <option>Music</option>
+                <option>Theater</option>
+                <option>Exercise</option>
+                <option>Movie/TV</option>
+                <option>Art</option>
+                <option>Science</option>
+                <option>Math</option>
+                <option>Politics</option>
+                <option>Cooking/Baking</option>
+                <option>Writing</option>
+                <option>Finance/Business</option>
+                <option>Traveling</option>
+                <option>Fashion</option>
+            </select>
+
+            <label>Favorite Music Type:</label>
+            <select name="music_type" required>
+                <option value="">--Select--</option>
+                <option>Pop</option>
+                <option>Country</option>
+                <option>R and B</option>
+                <option>Rap</option>
+                <option>Classical</option>
+                <option>Rock</option>
+                <option>Electronic</option>
+                <option>Indie</option>
+            </select>
+
+            <label>Hometown:</label>
+            <input type="text" name="hometown" required>
+
+            <label>What do you want out of this?</label>
+            <div class="radio-group">
+                <input type="radio" name="goal" value="casual" required> Casual<br>
+                <input type="radio" name="goal" value="relationship"> Relationship<br>
+                <input type="radio" name="goal" value="friend"> Friend
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

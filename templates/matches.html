@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Matches 💕</title>
+</head>
+<body>
+    <h1>Your Top Matches 💕</h1>
+
+    {% if matches %}
+        <p>Here are your best matches, {{ user.first_name }}:</p>
+        <ul>
+        {% for person, score in matches %}
+            <li>
+                {{ person.first_name }} {{ person.last_name }} - Score: {{ score }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>
+            Thanks for signing up, {{ user.first_name }}!
+            We couldn't find a strong match yet.
+        </p>
+        <p>
+            This could mean you're the first user, or we need more people with similar interests.
+            Check back later 💖
+        </p>
+    {% endif %}
+
+    <a href="/">Go back</a>
+</body>
+</html>
