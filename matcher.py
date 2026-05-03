@@ -9,9 +9,24 @@ class Matcher:
             return 0
         return 1 + self.count_matches(matches, index + 1)
     
+    def gender_compatible(self, p1, p2):
+        # If either person is looking for friendship, allow any gender
+        if p1.goal == "friend" and p2.goal == "friend":
+            return True
+
+        # For casual/relationship, both people's preferences must accept the other's gender
+        p1_accepts_p2 = (p1.preferred_gender == "Any" or p1.preferred_gender == p2.gender)
+        p2_accepts_p1 = (p2.preferred_gender == "Any" or p2.preferred_gender == p1.gender)
+
+        return p1_accepts_p2 and p2_accepts_p1
+
     def calculate_score(self, p1, p2):
         score = 0
 
+        # reject incompatible gender preferences for non-friend matches
+        if not self.gender_compatible(p1, p2):
+            return 0
+        
         # same goal
         if p1.goal == p2.goal:
             score += 3
