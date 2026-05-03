@@ -21,11 +21,11 @@ def load_profiles():
             for line in file:
                 data = line.strip().split(",")
 
-                if len(data) == 8:
+                if len(data) == 10:
                     profile = Profile(
                         data[0], data[1], int(data[2]),
                         data[3], data[4], data[5],
-                        data[6], data[7]
+                        data[6], data[7], data[8], data[9]
                     )
                     profiles_list.append(profile)
 
@@ -51,6 +51,8 @@ def submit():
         first_name = request.form["first_name"]
         last_name = request.form["last_name"]
         age = int(request.form["age"])
+        gender = request.form["gender"]
+        preferred_gender = request.form["preferred_gender"]
         interest1 = request.form["interest1"]
         interest2 = request.form["interest2"]
         music_type = request.form["music_type"]
@@ -66,16 +68,17 @@ def submit():
     if interest1 == interest2:
         return "Choose two different interests!"
 
-    profile = Profile(first_name, last_name, age, interest1, interest2, music_type, hometown, goal)
+    profile = Profile(first_name, last_name, age, gender, preferred_gender, interest1, interest2, music_type, hometown, goal)
 
-    # load existing profiles before matching
+    # loads existing profiles before matching
     profiles = load_profiles()
     matcher = Matcher(profiles)
     matches = matcher.find_matches(profile)
 
     # save new profile
     with open("profiles.txt", "a") as file:
-        file.write(f"{first_name},{last_name},{age},{interest1},{interest2},{music_type},{hometown},{goal}\n")
+        file.write(f"{first_name},{last_name},{age},{gender},{preferred_gender},"
+                   f"{interest1},{interest2},{music_type},{hometown},{goal}\n")
 
     # save match results
     with open("matches.txt", "a") as file:
@@ -101,6 +104,8 @@ def show_profiles():
             {
                 "name": f"{p.first_name} {p.last_name}",
                 "age": p.age,
+                "gender": p.gender,
+                "preferred_gender": p.preferred_gender,
                 "interests": list(p.get_interests()),
                 "music_type": p.music_type,
                 "hometown": p.hometown,
@@ -134,6 +139,37 @@ def match(index):
         ]
     }
 
+@app.route("/check")
+def check():
+    return render_template("check.html")
+
+
+@app.route("/check_matches", methods=["POST"])
+def check_matches():
+    profiles = load_profiles()
+
+    first_name = request.form["first_name"].strip()
+    last_name = request.form["last_name"].strip()
+    hometown = request.form["hometown"].strip()
+
+    user = None
+    for profile in profiles:
+        if (
+            profile.first_name.lower() == first_name.lower()
+            and profile.last_name.lower() == last_name.lower()
+            and profile.hometown.lower() == hometown.lower()
+        ):
+            user = profile
+            break
+
+    if not user:
+        return "Profile not found. Please sign up first."
+
+    matcher = Matcher(profiles)
+    matches = matcher.find_matches(user)
+
+    return render_template("matches.html", matches=matches, user=user)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001, debug=True)
+    
