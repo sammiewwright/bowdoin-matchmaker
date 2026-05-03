@@ -67,6 +67,25 @@
             
             <label>Age:</label>
             <input type="number" name="age" min="13" max="120" required>
+            
+            <label>Your Gender:</label>
+            <select name="gender" required>
+                <option value="">--Select--</option>
+                <option>Woman</option>
+                <option>Man</option>
+                <option>Non-binary</option>
+                <option>Other</option>
+            </select>
+
+            <label>Preferred Gender:</label>
+            <select name="preferred_gender" required>
+                <option value="">--Select--</option>
+                <option>Woman</option>
+                <option>Man</option>
+                <option>Non-binary</option>
+                <option>Other</option>
+                <option>Any</option>
+            </select>
 
             <label>Top Interest:</label>
             <select name="interest1" required>
@@ -128,9 +147,12 @@
                 <input type="radio" name="goal" value="relationship"> Relationship<br>
                 <input type="radio" name="goal" value="friend"> Friend
             </div>
-
+            
             <button type="submit">Submit</button>
         </form>
+        
+        <p><a href="/check">Already signed up? Check your matches</a></p>
+    
     </div>
 </body>
 </html>
